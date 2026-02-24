@@ -4,9 +4,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>МКД Cost Calculator — CC v2.1</title>
 
-  <!-- Локальные библиотеки для PDF (положи файлы в ./vendor/) -->
-  <script defer src="./vendor/html2canvas.min.js"></script>
-  <script defer src="./vendor/jspdf.umd.min.js"></script>
+  <!-- PDF-библиотеки через CDN (для GitHub Pages):
+       при желании можно заменить на локальные файлы -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNa5l1KJpF3Wf0u7dcGXNq35p3xNmPR9U1FVLtZL1NVr7DiIP9N6byN1Nsx3Rp3XIanFkFJxux1DPdhb7CJo0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-V4R2V2JAjI2Qz0i0iXASVQKq9RrJ8W3Z0X8shpGvMhA3of0Bd5CwHzBGr2susx1bwyodH4qzM0RkZ3v0uZ1x8A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <style>
     :root{
@@ -673,10 +674,11 @@
   }
 
   async function exportPdf(){
-    if (typeof html2canvas === "undefined" || typeof window.jspdf === "undefined"){
-      alert("Не найдены html2canvas/jspdf. Проверьте ./vendor/");
+    if (!window.html2canvas || !window.jspdf || !window.jspdf.jsPDF){
+      alert("Не удалось загрузить html2canvas или jsPDF. Проверьте подключение CDN.");
       return;
     }
+
     document.body.classList.add("export-mode");
     await new Promise(r => setTimeout(r, 150));
 
@@ -760,4 +762,3 @@
 </script>
 </body>
 </html>
-```
